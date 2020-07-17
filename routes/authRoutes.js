@@ -6,7 +6,7 @@ const UsersController = require('../controllers/UsersController');
 
 
 router.post('/users/register', UsersController.register)
-router.get('/users/login',  UsersController.login)
-router.delete('/users/verify-email/:verfiy_token',UsersController.verify_email)
+router.post('/users/login',  UsersController.login)
+router.get('/users/verify-email/:verify_token',UsersController.verify_email)
 
 module.exports = router

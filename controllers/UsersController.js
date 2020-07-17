@@ -13,9 +13,9 @@ module.exports =
             try {
                 console.log("registering user")
                 let { first_name, last_name, email, username = null, password, dob, gender = null } = req.body
-                const accessToken = uuid();
+                const access_token = uuid();
                 password = md5(password); // encrypt password
-                const verify_token = md5(`${accessToken}/${password}`)
+                const verify_token = md5(`${access_token}/${password}`)
 
                 const docRef = db.collection('users').doc(email);
                 const user = {
@@ -25,7 +25,8 @@ module.exports =
                     password,
                     dob,
                     gender,
-                    accessToken,
+                    access_token,
+                    verify_token,
                     "email_verified" : false,
 
                 }
@@ -35,7 +36,7 @@ module.exports =
                 const verifyRef = db.collection('email_verification').doc(verify_token);
                 await verifyRef.set({email})
                 
-                return res.status(200).json(new AppResponse(0, "User Registration Successfull, please confirm your email") );
+                return res.status(200).json(new AppResponse(0, "User Registration Successfull, please confirm your email", {verify_token, access_token}) );
             
             
             } catch (error) {
@@ -54,12 +55,19 @@ module.exports =
 
                 const docRef = db.collection('users').doc(email);
                 const doc = await docRef.get();
-                const accessToken = doc.data().accessToken
+                if(doc.data().empty || doc.data().password !== password || doc.data().access_token == undefined ){
+                    return res.status(404).json(new AppResponse(-1, "Invalid/Incorrect Username or password", {}, []) );
+                } else if (doc.data().email_verified == false ){
+                    const verify_token = doc.data().verify_token
+                    return res.status(404).json(new AppResponse(-1, "You need to verify your email", {verify_token}, []) );
+                }
 
-                return res.status(200).json(new AppResponse(0, "Login successfull, copy your accesstoken ", {accessToken}) );
+                const access_token = doc.data().access_token
+
+                return res.status(200).json(new AppResponse(0, "Login successfull, copy your accesstoken ", {access_token}) );
 
              } catch (error) {
-                 return res.status(404).json(new AppResponse(0, "Invalid/Incorrect Username or password", {}, [error]) );
+                 return res.status(404).json(new AppResponse(-1, "Invalid/Incorrect Username or password", {}, [error]) );
              }
         })()
 
@@ -69,7 +77,7 @@ module.exports =
             (async () => {
             try {
                 let { verify_token } = req.params
-
+                console.log(`verify token : ${verify_token}`)
                 const docRef = db.collection('email_verification').doc(verify_token);
                 const doc = await docRef.get();
                 const email = doc.data().email;
@@ -80,7 +88,7 @@ module.exports =
                 return res.status(200).json(new AppResponse(0, "Email verified successfully ") );
 
              } catch (error) {
-                 return res.status(404).json(new AppResponse(0, "Invalid verification token", {}, [error]) );
+                 return res.status(404).json(new AppResponse(-1, "Invalid verification token", {}, [error]) );
              }
 
             })()

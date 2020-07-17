@@ -19,9 +19,8 @@ const authCheck = require('./middleware/authCheck.js');
 // create
 
 app.use('/api/', require('./routes/authRoutes.js'));
+
 app.use('/api/', authCheck, require('./routes/protectedRoutes.js')); // requires authentication check
-
-
 
 
 const port = process.env.PORT || 3333;
