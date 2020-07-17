@@ -1,21 +1,20 @@
-FROM node:10.14.1-alpine
+FROM node:12
 
-LABEL maintainer="acumen <seunoni34@gmail.com>"
+# Create app directory
+WORKDIR /usr/src/acumen
 
-ENV LINUX alpine
-ENV APP acumen
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
+COPY serviceAccount.json ./
 
-# Create applicatin folder and adjust persmissions
-RUN mkdir -p /var/www/acumen && chown -Rf nobody:nobody /var/www/acumen
-COPY --chown=nobody:nobody . /var/www/acumen
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
 
-# Create link for configs
-RUN ln -sf /etc/config/serviceAccount.json /var/www/acumen/serviceAccount.json
+# Bundle app source
+COPY . .
 
-WORKDIR /var/www/acumen
 EXPOSE 8080
-
-CMD [ "/usr/local/bin/npm", \
-    "--prefix", \
-    "/var/www/acumen", \
-    "start" ]
+CMD [ "node", "app.js" ]

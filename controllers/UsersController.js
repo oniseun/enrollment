@@ -12,8 +12,10 @@ module.exports =
 
         static register(req, res) {
            
-        (async () => {
+       
             try {
+                (async () => {
+
                 let { first_name, last_name, email, username = null, password, dob, gender = null } = req.body
                 const accessToken = uuid();
                 password = md5(password); // encrypt password
@@ -38,10 +40,11 @@ module.exports =
                 await verifyRef.set({email})
 
                 return res.status(200).json(new AppResponse(0, "User Registration Successfull, please confirm your email") );
+            })
+            
             } catch (error) {
                 return res.status(401).json(new AppResponse(-1, "User Registration Failed", {}, [error]) );
-            }
-        })
+            }     
         
 
         }
