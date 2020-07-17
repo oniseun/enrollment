@@ -23,5 +23,5 @@ app.use('/api/', require('./routes/authRoutes.js'));
 app.use('/api/', authCheck, require('./routes/protectedRoutes.js')); // requires authentication check
 
 
-const port = process.env.PORT || 3333;
+const port = process.env.PORT || 8888;
 app.listen(port, () => console.log(`Enrollment app listening on port ${port}!`))

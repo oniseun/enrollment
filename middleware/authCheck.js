@@ -21,14 +21,18 @@ module.exports = function authCheck(req, res, next) { // checks if user is logge
             if (snapshot.empty) {
                 return res.status(404).json(new AppResponse(-1, "User not found") );               
             }  
+            let email = null
+            snapshot.forEach(doc => {
+                email = doc.id
+              });
 
-
+            console.log(`${email} :: ${accessToken}`)
             res.locals.accessToken = accessToken;
-            res.locals.email = snapshot[0]['email'];
-
+            res.locals.email = email;
             next();
         }
         catch (e) {
+            console.log(e)
             res.status(403).json(new AppResponse(-1, "Invalid authorization token, please re-validate", {}, [e])) 
         }
 

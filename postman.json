@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\" : \"victor\",\n    \"last_name\" : \"oni\",\n    \"username\" : \"oniseun\",\n    \"gender\" : \"male\",\n    \"email\" : \"email@email.com\",\n    \"password\" : \"password\",\n    \"dob\" : \"29/07/1991\"\n}",
+					"raw": "{\n    \"first_name\" : \"victor\",\n    \"last_name\" : \"oni\",\n    \"username\" : \"oniseun\",\n    \"gender\" : \"male\",\n    \"email\" : \"seun@email.com\",\n    \"password\" : \"password\",\n    \"dob\" : \"29/07/1991\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,7 +20,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3333/api/users/register",
+					"raw": "http://127.0.0.1:8888/api/users/register",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -28,7 +28,7 @@
 						"0",
 						"1"
 					],
-					"port": "3333",
+					"port": "8888",
 					"path": [
 						"api",
 						"users",
@@ -43,8 +43,17 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\" : \"seun@email.com\",\n    \"password\" : \"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://127.0.0.1:3333/api/users/login",
+					"raw": "http://127.0.0.1:8888/api/users/login",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -52,7 +61,7 @@
 						"0",
 						"1"
 					],
-					"port": "3333",
+					"port": "8888",
 					"path": [
 						"api",
 						"users",
@@ -64,11 +73,23 @@
 		},
 		{
 			"name": "verify user",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"verify_token\": \"2763c723d9c7039592321bc80b3c4e5b\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://127.0.0.1:3333/api/users/verify_user",
+					"raw": "http://127.0.0.1:8888/api/users/verify-email/2763c723d9c7039592321bc80b3c4e5b",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -76,11 +97,12 @@
 						"0",
 						"1"
 					],
-					"port": "3333",
+					"port": "8888",
 					"path": [
 						"api",
 						"users",
-						"verify_user"
+						"verify-email",
+						"2763c723d9c7039592321bc80b3c4e5b"
 					]
 				}
 			},
@@ -89,11 +111,21 @@
 		{
 			"name": "create enrollment",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "fdec08ab-9b3c-4b6f-88e1-374991252475",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "",
+					"raw": "{\n    \"course_id\" : 1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +133,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3333/api/enrollments/create",
+					"raw": "http://127.0.0.1:8888/api/enrollments/create",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -109,7 +141,7 @@
 						"0",
 						"1"
 					],
-					"port": "3333",
+					"port": "8888",
 					"path": [
 						"api",
 						"enrollments",
@@ -120,12 +152,34 @@
 			"response": []
 		},
 		{
-			"name": "list enrolment",
+			"name": "course list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "fdec08ab-9b3c-4b6f-88e1-374991252475",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://127.0.0.1:3333/api/enrollments/list",
+					"raw": "http://127.0.0.1:8888/api/enrollments/courses",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -133,11 +187,11 @@
 						"0",
 						"1"
 					],
-					"port": "3333",
+					"port": "8888",
 					"path": [
 						"api",
 						"enrollments",
-						"list"
+						"courses"
 					]
 				}
 			},
@@ -146,10 +200,89 @@
 		{
 			"name": "delete enrollment",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "fdec08ab-9b3c-4b6f-88e1-374991252475",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"enrol_id\": \"KDqidkp1WKO89IVXJvlN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8888/api/enrollments/delete/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"enrollments",
+						"delete",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "enrollment list",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "fdec08ab-9b3c-4b6f-88e1-374991252475",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "http://127.0.0.1:8888/api/enrollments/list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8888",
+					"path": [
+						"api",
+						"enrollments",
+						"list"
+					]
 				}
 			},
 			"response": []

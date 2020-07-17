@@ -4,7 +4,7 @@ const EnrollmentController = require('../controllers/EnrollmentController');
 
 const validator = new (require('../middleware/requestValidator.js'));
 
-
+router.get('/enrollments/courses', EnrollmentController.get_course_list)
 router.post('/enrollments/create', EnrollmentController.create_enrollment)
 router.get('/enrollments/list',  EnrollmentController.get_enrollments)
 router.delete('/enrollments/delete', EnrollmentController.delete_enrollment)

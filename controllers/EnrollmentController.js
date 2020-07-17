@@ -6,19 +6,33 @@ const db = admin.firestore();
 module.exports =
 
     class EnrollmentController {
-        static get_courses() {
-            (async () => {
-
+        static async get_courses() {
+        
             try {
                 const response = await axios.get('https://5ea5cbca2d86f00016b46276.mockapi.io/api/courses');
-                return response;
+                console.log(response)
+                return response.data;
               } catch (error) {
                 console.error(error);
                 throw error;
               }
 
-            })
         }
+        static get_course_list(req, res, next) {            
+            (async () => {
+            try {            
+                const course_list = await EnrollmentController.get_courses();
+                return res.status(200).json(new AppResponse(0, "Successfull", {course_list}) );
+
+             } catch (error) {
+                 console.log(error)
+                 return res.status(404).json(new AppResponse(-1, "Error fetching course list , please try again", {}, [error]) );
+             }
+
+            })()
+
+        }
+
         static create_enrollment(req, res, next) {
             (async () => {
             
@@ -26,8 +40,9 @@ module.exports =
                 const email = res.locals.email // to be gotten from auth middleware
                 let { course_id } = req.body
                const docRef = db.collection('enrollments').doc();
-               const course_details = await EnrollmentController.get_courses().find( c => c.id = course_id);
-
+               const courses = await EnrollmentController.get_courses()
+               const course_details = courses.find( c => c.id = course_id);
+                console.log(course_details)
                 const data = {
                     "enrol_id": docRef.id,
                     course_id, 
@@ -40,7 +55,8 @@ module.exports =
                 
                 return res.status(200).json(new AppResponse(0, "Course Added SuccessFully", {course_details}) );
             } catch (error) {
-                return res.status(401).json(new AppResponse(0, "Failed to add course", {}, [error]) );
+                console.log(error)
+                return res.status(401).json(new AppResponse(-1, "Failed to add course", {}, [error]) );
             }
 
         })()
@@ -57,8 +73,14 @@ module.exports =
                 if (snapshot.empty) {
                     return res.status(404).json(new AppResponse(-1, "No course enrollments found for user") );               
                 }  
+                const list = []
+                snapshot.forEach(doc => {
+                    console.log(doc.data())
+                    list.push(doc.data())
+                  });
+    
 
-                return res.status(200).json(new AppResponse(0, "Successfull", {snapshot}) );
+                return res.status(200).json(new AppResponse(0, "Successfull", {list}) );
 
              } catch (error) {
                  return res.status(404).json(new AppResponse(-1, "No course enrollments found for user", {}, [error]) );
@@ -72,20 +94,25 @@ module.exports =
             try {
                 let { enrol_id } = req.body;
                 const auth_email = res.locals.email // to be gotten from auth middleware
-
+                console.log(`delete enrol id : ${enrol_id}`)
                 const docRef = db.collection('enrollments').doc(enrol_id)
-                
                 const doc = await docRef.get();
-                const user_email = doc.data().email;
-                if(user_email == auth_email) {
-                    const res = await db.collection('enrollments').doc(enrol_id).delete();
-                    return res.status(200).json(new AppResponse(0, "Enrollment Deleted successfully ", {res}) );
+
+                if(!doc.exists) {
+                    return res.status(404).json(new AppResponse(-1, "Enrollment does not exist", {}, []) );
+                }
+                const owner_email = doc.data().email;
+                console.log(`${owner_email} : ${enrol_id}`)
+                if(owner_email == auth_email) {
+                    const del = await docRef.delete();
+                    return res.status(200).json(new AppResponse(0, "Enrollment Deleted successfully ", {del, "data" : doc.data()}) );
                 } else {
-                    return res.status(404).json(new AppResponse(-1, "Error Deleting enrollment", {}, [error]) );
+                    return res.status(404).json(new AppResponse(-1, "Erollment not created by user", {}, []) );
                 }
 
 
              } catch (error) {
+                 console.log(error)
                  return res.status(404).json(new AppResponse(-1, "Error Deleting enrollment", {}, [error]) );
              }
             })()
