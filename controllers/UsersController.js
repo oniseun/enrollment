@@ -36,7 +36,7 @@ module.exports =
                 const verifyRef = db.collection('email_verification').doc(verify_token);
                 await verifyRef.set({email})
                 
-                return res.status(200).json(new AppResponse(0, "User Registration Successfull, please confirm your email", {verify_token, access_token}) );
+                return res.status(200).json(new AppResponse(0, "User Registration Successfull, please confirm your email", {verify_token}) );
             
             
             } catch (error) {
