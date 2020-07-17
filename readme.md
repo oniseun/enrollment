@@ -1,7 +1,7 @@
 
 ## About Loan APP
 
-A system designed to allow customers to create profile (imagine basic user bio data) and apply for loans.
+Using Express JS, Firestore and Docker create a dockerized simple Student Management Application APIs with the following modules.
 
 ## EndPoint Summary
 
@@ -9,41 +9,47 @@ A system designed to allow customers to create profile (imagine basic user bio d
 -  **/api/user/register** <POST>
 creates a new user in the system
 
-ACCEPTS: name, phone, email, password, address
+ACCEPTS: first_name, last_name,  email, password, gender, dob, password
 
-RETURNS (if successful) : accessToken - which should be passed as Authorization bearer header across all request
+RETURNS (if successful) : verify_token - should be used to verify email
+
+-  **/api/user/verify-email/<verify_token>** <POST>
+logs in a regisered user to the system
+
+ACCEPTS: verify_token
+
+RETURNS (if successful) 
 
 -  **/api/user/login** <POST>
 logs in a regisered user to the system
 
-ACCEPTS: phone, password
+ACCEPTS: email, password
 
-RETURNS (if successful) : user *bioData* and *accessToken* - which should be passed as Authorization bearer header across all request
+RETURNS (if successful) : user *access_token* - which should be passed as Authorization bearer header across all request
 
--  **/api/loans/existing** <GET> *requires Authorization header*
 
-RETURNS:  list of available loans and serial number
+-  **/api/enrollments/courses** <GET> *requires Authorization header*
 
--  **/api/loans/apply** <POST> *requires Authorization header*
-Applies for loan 
+RETURNS:  list of available cousres
 
-ACCEPTS: loanSN (loan serial number from existing loan list)
+-  **/api/enrollments/create** <POST> *requires Authorization header*
 
-RETURNS (if successfull) : *loanData* - loan Application details
+ACCEPTS: course_id
 
--  **/api/loans/running** <GET> *requires Authorization header*
+RETURNS (if successfull) : *data* - loan Application details
 
-RETURNS:  list of successful loan applications by user
+-  **/api/enrollments/list** <GET> *requires Authorization header*
 
--  **/api/user/list** <GET> *requires Authorization header*
+RETURNS:  list of successful enrollments by user
 
-RETURNS: list of registered users
+-  **/api/enrollments/delete** <DELETE> *requires Authorization header*
+
+ACCEPTS: enrol_id
+RETURNS: deletes enrollment 
 
 
 ## Other details
 
--  One Database [ loans.json]  with 3 collections [ users, existingLoans, loanApplications ]
--  Database and collections are stored in-memory with loki.js and automatically destroyed on application close
+-  One Database [ firebase]  with 3 collections [ users, enrollments, email_verification ]
 -  install all packages by running **npm install**
 -  start app with **npm start**
--  run test with **npm test**
