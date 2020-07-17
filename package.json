@@ -1,0 +1,24 @@
+{
+  "name": "acumen",
+  "version": "1.0.0",
+  "description": "simple student database project ",
+  "main": "app.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "firebase-admin": "^9.0.0",
+    "joi": "^17.1.1",
+    "md5": "^2.2.1",
+    "uuid": "^8.2.0"
+  }
+}
