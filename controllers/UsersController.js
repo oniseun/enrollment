@@ -1,4 +1,4 @@
-const uuid = require('uuid');
+const { uuid } = require('uuidv4');
 const md5 = require('md5');
 const AppResponse = require('../models/AppResponse')
 
@@ -7,15 +7,11 @@ const admin = require('firebase-admin');
 const db = admin.firestore();
 
 module.exports =
-
     class UsersController {
-
-        static register(req, res) {
-           
-       
+        static register(req, res, next) {         
+        (async () => {
             try {
-                (async () => {
-
+                console.log("registering user")
                 let { first_name, last_name, email, username = null, password, dob, gender = null } = req.body
                 const accessToken = uuid();
                 password = md5(password); // encrypt password
@@ -38,18 +34,19 @@ module.exports =
 
                 const verifyRef = db.collection('email_verification').doc(verify_token);
                 await verifyRef.set({email})
-
+                
                 return res.status(200).json(new AppResponse(0, "User Registration Successfull, please confirm your email") );
-            })
+            
             
             } catch (error) {
+                console.log(error)
                 return res.status(401).json(new AppResponse(-1, "User Registration Failed", {}, [error]) );
             }     
-        
+        })()
 
         }
 
-        static login(req, res) { // logs in user            
+        static login(req, res, next) { // logs in user            
         (async () => {
             try {
                 let { email,  password} = req.body
@@ -64,14 +61,14 @@ module.exports =
              } catch (error) {
                  return res.status(404).json(new AppResponse(0, "Invalid/Incorrect Username or password", {}, [error]) );
              }
-        })
+        })()
 
         }
 
-        static verify_email(req, res) { // logs in user            
+        static verify_email(req, res, next) { // logs in user            
             (async () => {
             try {
-                let { verify_token } = req.body
+                let { verify_token } = req.params
 
                 const docRef = db.collection('email_verification').doc(verify_token);
                 const doc = await docRef.get();
@@ -86,10 +83,7 @@ module.exports =
                  return res.status(404).json(new AppResponse(0, "Invalid verification token", {}, [error]) );
              }
 
-            })
+            })()
 
         }
-
-
-
     }

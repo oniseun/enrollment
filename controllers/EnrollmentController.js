@@ -8,7 +8,7 @@ module.exports =
     class EnrollmentController {
         static get_courses() {
             (async () => {
-                
+
             try {
                 const response = await axios.get('https://5ea5cbca2d86f00016b46276.mockapi.io/api/courses');
                 return response;
@@ -19,14 +19,14 @@ module.exports =
 
             })
         }
-        static create_enrollment(req, res) {
+        static create_enrollment(req, res, next) {
             (async () => {
             
             try {
                 const email = res.locals.email // to be gotten from auth middleware
                 let { course_id } = req.body
                const docRef = db.collection('enrollments').doc();
-               const course_details = EnrollmentController.get_courses().find( c => c.id = course_id);
+               const course_details = await EnrollmentController.get_courses().find( c => c.id = course_id);
 
                 const data = {
                     "enrol_id": docRef.id,
@@ -37,17 +37,17 @@ module.exports =
                 }
 
                 await docRef.set(data)
-
+                
                 return res.status(200).json(new AppResponse(0, "Course Added SuccessFully", {course_details}) );
             } catch (error) {
                 return res.status(401).json(new AppResponse(0, "Failed to add course", {}, [error]) );
             }
 
-        })
+        })()
 
         }
 
-        static get_enrollments(req, res) { // logs in user            
+        static get_enrollments(req, res, next) { // logs in user            
             (async () => {
             try {
                 const email = res.locals.email // to be gotten from auth middleware
@@ -63,11 +63,11 @@ module.exports =
              } catch (error) {
                  return res.status(404).json(new AppResponse(-1, "No course enrollments found for user", {}, [error]) );
              }
-            })
+            })()
 
         }
 
-        static  delete_enrollment(req, res) { // logs in user            
+        static  delete_enrollment(req, res, next) { // logs in user            
             (async () => {
             try {
                 let { enrol_id } = req.body;
@@ -88,7 +88,7 @@ module.exports =
              } catch (error) {
                  return res.status(404).json(new AppResponse(-1, "Error Deleting enrollment", {}, [error]) );
              }
-            })
+            })()
 
         }
 

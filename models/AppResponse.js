@@ -4,8 +4,8 @@ module.exports = class AppResponse {
      * @param {String} message
      * @param { []} errors 
      */
-    constructor(ResponseCode, response, data = {}, errors = []) {
-        this.ResponseCode = this.ResponseCode;
+    constructor(ResponseCode, message, data = {}, errors = []) {
+        this.ResponseCode = ResponseCode;
         this.message = message ;
         this.data = data ;
         this.errors = errors 

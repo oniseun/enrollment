@@ -6,7 +6,7 @@ A system designed to allow customers to create profile (imagine basic user bio d
 ## EndPoint Summary
 
 
--  **/api/user/create** <POST>
+-  **/api/user/register** <POST>
 creates a new user in the system
 
 ACCEPTS: name, phone, email, password, address
