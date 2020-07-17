@@ -5,14 +5,6 @@ LABEL maintainer="acumen <seunoni34@gmail.com>"
 ENV LINUX alpine
 ENV APP acumen
 
-RUN apk add --no-cache --force-refresh \
-            net-tools \
-            lsof \
-            vim \
-            curl \
-            wget \
-
-
 # Create applicatin folder and adjust persmissions
 RUN mkdir -p /var/www/acumen && chown -Rf nobody:nobody /var/www/acumen
 COPY --chown=nobody:nobody . /var/www/acumen
