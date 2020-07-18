@@ -1,0 +1,14 @@
+{
+	"id": "2e1bb9ea-0372-4307-a33b-1dd2cbd880c1",
+	"name": "acumen enrollment",
+	"values": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8888/api",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-07-18T07:54:47.615Z",
+	"_postman_exported_using": "Postman/7.28.0"
+}

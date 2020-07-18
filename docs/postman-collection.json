@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "b21a54d9-807b-41b1-aa54-a4af4c855216",
-		"name": "acumen",
+		"name": "acumen enrollments",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"first_name\" : \"victor\",\n    \"last_name\" : \"oni\",\n    \"username\" : \"oniseun\",\n    \"gender\" : \"male\",\n    \"email\" : \"seun@email.com\",\n    \"password\" : \"password\",\n    \"dob\" : \"29/07/1991\"\n}",
+					"raw": "{\n    \"first_name\" : \"victor\",\n    \"last_name\" : \"oni\",\n    \"username\" : \"oniseun\",\n    \"gender\" : \"male\",\n    \"email\" : \"seunoni34@gmail.com\",\n    \"password\" : \"password\",\n    \"dob\" : \"29/07/1991\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,17 +20,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8888/api/users/register",
-					"protocol": "http",
+					"raw": "{{base_url}}/users/register",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{base_url}}"
 					],
-					"port": "8888",
 					"path": [
-						"api",
 						"users",
 						"register"
 					]
@@ -45,7 +39,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\" : \"seun@email.com\",\n    \"password\" : \"password\"\n}",
+					"raw": "{\n    \"email\" : \"seunoni34@gmail.com\",\n    \"password\" : \"password\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -53,17 +47,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8888/api/users/login",
-					"protocol": "http",
+					"raw": "{{base_url}}/users/login",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{base_url}}"
 					],
-					"port": "8888",
 					"path": [
-						"api",
 						"users",
 						"login"
 					]
@@ -81,7 +69,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n        \"verify_token\": \"2763c723d9c7039592321bc80b3c4e5b\"\n}",
+					"raw": "{\n       \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -89,20 +77,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8888/api/users/verify-email/2763c723d9c7039592321bc80b3c4e5b",
-					"protocol": "http",
+					"raw": "{{base_url}}/users/verify-email/3222bfd9b73c6cdffe9f3261a5b203e5",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{base_url}}"
 					],
-					"port": "8888",
 					"path": [
-						"api",
 						"users",
 						"verify-email",
-						"2763c723d9c7039592321bc80b3c4e5b"
+						"3222bfd9b73c6cdffe9f3261a5b203e5"
 					]
 				}
 			},
@@ -116,7 +98,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "fdec08ab-9b3c-4b6f-88e1-374991252475",
+							"value": "ad827bcd-4411-4020-bcf3-0edc951c5f14",
 							"type": "string"
 						}
 					]
@@ -125,7 +107,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"course_id\" : 1\n}",
+					"raw": "{\n    \"course_id\" : 2\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -133,17 +115,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8888/api/enrollments/create",
-					"protocol": "http",
+					"raw": "{{base_url}}/enrollments/create",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{base_url}}"
 					],
-					"port": "8888",
 					"path": [
-						"api",
 						"enrollments",
 						"create"
 					]
@@ -179,17 +155,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8888/api/enrollments/courses",
-					"protocol": "http",
+					"raw": "{{base_url}}/enrollments/courses",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{base_url}}"
 					],
-					"port": "8888",
 					"path": [
-						"api",
 						"enrollments",
 						"courses"
 					]
@@ -205,7 +175,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "fdec08ab-9b3c-4b6f-88e1-374991252475",
+							"value": "ad827bcd-4411-4020-bcf3-0edc951c5f14",
 							"type": "string"
 						}
 					]
@@ -214,7 +184,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"enrol_id\": \"KDqidkp1WKO89IVXJvlN\"\n}",
+					"raw": "{\n    \"enrol_id\": \"vXf7JP9ouHjZwjarMIdF\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -222,17 +192,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8888/api/enrollments/delete/",
-					"protocol": "http",
+					"raw": "{{base_url}}/enrollments/delete/",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{base_url}}"
 					],
-					"port": "8888",
 					"path": [
-						"api",
 						"enrollments",
 						"delete",
 						""
@@ -252,7 +216,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "fdec08ab-9b3c-4b6f-88e1-374991252475",
+							"value": "ad827bcd-4411-4020-bcf3-0edc951c5f14",
 							"type": "string"
 						}
 					]
@@ -269,17 +233,11 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8888/api/enrollments/list",
-					"protocol": "http",
+					"raw": "{{base_url}}/enrollments/list",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"{{base_url}}"
 					],
-					"port": "8888",
 					"path": [
-						"api",
 						"enrollments",
 						"list"
 					]
