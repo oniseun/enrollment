@@ -49,7 +49,7 @@ RETURNS: deletes enrollment
 
 
 ## Other details
-
+-  Change the config/serviceAccountSample.json file to to serviceAccount.json downloaded from firebase console
 -  One Database [ firebase]  with 3 collections [ users, enrollments, email_verification ]
 -  install all packages by running **npm install**
 -  start app with **npm start**
