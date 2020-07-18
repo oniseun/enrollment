@@ -1,8 +1,7 @@
 const { uuid } = require('uuidv4');
 const md5 = require('md5');
+const bcrypt = require('bcrypt');
 const AppResponse = require('../models/AppResponse')
-
-
 const admin = require('firebase-admin');
 const db = admin.firestore();
 
@@ -14,8 +13,8 @@ module.exports =
                 console.log("registering user")
                 let { first_name, last_name, email, username = null, password, dob, gender = null } = req.body
                 const access_token = uuid();
-                password = md5(password); // encrypt password
-                const verify_token = md5(`${access_token}/${password}`)
+                password = bcrypt.hashSync(password, 10);
+                const verify_token = md5(`${access_token}${password}${Date.now()}`)
 
                 const docRef = db.collection('users').doc(email);
                 const user = {
@@ -51,11 +50,10 @@ module.exports =
         (async () => {
             try {
                 let { email,  password} = req.body
-                password = md5(password);
 
                 const docRef = db.collection('users').doc(email);
                 const doc = await docRef.get();
-                if(doc.data().empty || doc.data().password !== password || doc.data().access_token == undefined ){
+                if(doc.data().empty || !bcrypt.compareSync(password, doc.data().password) || doc.data().access_token == undefined ){
                     return res.status(404).json(new AppResponse(-1, "Invalid/Incorrect Username or password", {}, []) );
                 } else if (doc.data().email_verified == false ){
                     const verify_token = doc.data().verify_token
