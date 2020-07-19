@@ -1,5 +1,5 @@
 
-## About Loan APP
+## About Enrollment APP
 
 Using Express JS, Firestore and Docker create a dockerized simple Student Management Application APIs with the following modules.
 
