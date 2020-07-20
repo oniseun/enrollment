@@ -36,7 +36,7 @@ RETURNS:  list of available cousres
 
 ACCEPTS: course_id
 
-RETURNS (if successfull) : *data* - loan Application details
+RETURNS (if successfull) : *data* 
 
 -  **/api/enrollments/list** <GET> *requires Authorization header*
 
